@@ -33,6 +33,6 @@ class ReviewViewSet(viewsets.ModelViewSet):
     
     def perform_create(self, serializer):
         serializer.save(
-            user = self.request.user,
-            product_id = self.kwargs['product_pk']
+            user=self.request.user,
+            product_id=self.kwargs['product_pk']
         )

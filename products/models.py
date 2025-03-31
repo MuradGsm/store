@@ -4,7 +4,7 @@ from django.utils.text import slugify
 
 User = get_user_model()
 
-class Categories(models.Model):
+class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
     description = models.TextField(blank=True, null=True)
     slug = models.SlugField(max_length=100, unique=True)
@@ -18,11 +18,11 @@ class Categories(models.Model):
         return self.name
     
 
-class Products(models.Model):
+class Product(models.Model):
     title = models.CharField(max_length=100, unique=True)
     description = models.TextField(blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    categgories = models.ForeignKey(Categories, on_delete=models.CASCADE, related_name='products')
+    categgories = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
     stoks = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -32,7 +32,7 @@ class Products(models.Model):
 
 class Review(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews')
-    product = models.ForeignKey(Products, on_delete=models.CASCADE, related_name='reviews')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
     content = models.TextField()
     rating = models.IntegerField(choices=[(i, str(i)) for i in range(1, 6)])
     created_at = models.DateTimeField(auto_now_add=True)
